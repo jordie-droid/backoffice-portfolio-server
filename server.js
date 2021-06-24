@@ -12,10 +12,12 @@ server.use(cors());
 const BASEURI = "/api/projects";
 
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST || "sql4.freemysqlhosting.net",
-  user: process.env.DB_USER || "sql4419467",
-  password: process.env.DB_PASSWORD || "uVqSI8mGSE",
-  database: process.env.DATABASE || "sql4419467",
+  host:
+    process.env.DB_HOST ||
+    "be4ii2dli94v1kae6omf-mysql.services.clever-cloud.com",
+  user: process.env.DB_USER || "u4kzufogvdoacmii",
+  password: process.env.DB_PASSWORD || "osgmiRROsOaKVIs4zgaf",
+  database: process.env.DATABASE || "be4ii2dli94v1kae6omf",
 });
 
 const checkProjectExistence = (request, response, next) => {
@@ -67,6 +69,7 @@ server.post(
   `${BASEURI}/`,
   validateBody,
   ({ body: { NAME, DESCRIPTION, IMAGE } }, response) => {
+    console.log(NAME, DESCRIPTION, IMAGE);
     connection.query(
       "INSERT INTO projects (NAME,DESCRIPTION,IMAGE) VALUE (?,?,?)",
       [NAME, DESCRIPTION, IMAGE],
@@ -85,6 +88,7 @@ server.put(
   checkProjectExistence,
   validateBody,
   ({ params: { id }, body: { NAME, DESCRIPTION, IMAGE } }, response) => {
+    console.log(id);
     connection.query(
       "UPDATE projects SET NAME=?, DESCRIPTION=?, IMAGE=? WHERE ID= ?",
       [NAME, DESCRIPTION, IMAGE, id],
